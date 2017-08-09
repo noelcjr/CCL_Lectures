@@ -22,8 +22,8 @@
       \item Introduction
       \item Learn about the Protein Databank at rcsb.org
       \item Download and install VMD. View Protein in VMD and learn some basic commands.
-      \item How Crystal structures are obtained. Hydroge can go unnoticed, need to be added.
-      \item Quick intoor to git and github. Fork and pull EntropyMaxima and CCL\_Lectures repositories.
+      \item How Crystal structures are obtained. Hydrogen can go unnoticed, need to be added.
+      \item Quick intro to git and github. Fork and pull EntropyMaxima and CCL\_Lectures repositories.
       \item Bash shell. Intro and simple use for automating multiple step procedures.
       \item Prepare a protein structure.
    \end{enumerate}
@@ -33,12 +33,12 @@
   \begin{columns}
       \begin{column}{0.5\textwidth}
         \begin{figure}
-           \includegraphics[width=1.4in]{/home/noel/Pictures/Presentations/Insulin/Extended_Central_Dogma_with_Enzymes}
+           \includegraphics[width=1.4in]{../../Lecture_Pictures/Extended_Central_Dogma_with_Enzymes}
         \end{figure}
       \end{column}
       \begin{column}{0.5\textwidth}
         \begin{figure}
-           \includegraphics[width=1.4in]{/home/noel/Pictures/Presentations/Insulin/Amino_Acids}
+           \includegraphics[width=1.4in]{../../Lecture_Pictures/Amino_Acids}
         \end{figure}
       \end{column}
    \end{columns}
@@ -48,8 +48,8 @@
 \begin{frame}{Protein Data Bank (www.rcsb.org)}
           \begin{center}
           \begin{figure}
-           \includegraphics[width=2.1in]{/home/noel/Pictures/Presentations/Insulin/RCSB_screen_Shot}
-           \includegraphics[width=1.2in]{/home/noel/Pictures/Presentations/Insulin/protein_structures}
+           \includegraphics[width=2.1in]{../../Lecture_Pictures/RCSB_screen_Shot}
+           \includegraphics[width=1.2in]{../../Lecture_Pictures/protein_structures}
           \end{figure}
           \textcolor{cyan}{\small PDB Holdings Breakdown up to 2016}
           {\tiny
@@ -70,7 +70,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Visualization with VMD}
   \begin{figure}
-    \includegraphics[width=4.3in]{/home/noel/Pictures/Presentations/Insulin/VMD}
+    \includegraphics[width=4.3in]{../../Lecture_Pictures/VMD}
   \end{figure}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -142,13 +142,13 @@
   \begin{columns}
       \begin{column}{0.5\textwidth}
         \begin{figure}
-           \includegraphics[width=1.5in]{/home/noel/Pictures/Presentations/Insulin/XRay_Braggs_diffraction}
+           \includegraphics[width=1.5in]{../../Lecture_Pictures/XRay_Braggs_diffraction}
         \end{figure}
         {\tiny Licensed under CC BY-SA 3.0 via Commons \\ https://commons.wikimedia.org/wiki/File:Bragg\_diffraction\_2.svg}
       \end{column}
       \begin{column}{0.5\textwidth}
         \begin{figure}
-           \includegraphics[width=1.5in]{/home/noel/Pictures/Presentations/Insulin/X_ray_diffraction}
+           \includegraphics[width=1.5in]{../../Lecture_Pictures/X_ray_diffraction}
         \end{figure}
         {\tiny Licensed under CC BY-SA 3.0 via Commons \\ https://commons.wikimedia.org/wiki/File:X\_ray\_diffraction.png}
       \end{column}
@@ -176,21 +176,35 @@
              \item Now that you have a forked repository in your github account, let's download it to a directory
                    in your computer and use the code in it to modify proteins. 
              \item git clone https://github.com/$<$url to your forked repository$>$/EntropyMaxima
-             \item get the files for this lecture: git clone https://github.com/noelcjr/$<$ProteinModelingClass$>$
-                   This repository has bash scripts, but do not run them in this folder, just copy the scripts to another folder.
+             \item get the files for this lecture: 'git clone https://github.com/noelcjr/CCL\_Lectures'
+                   This repository has bash scripts, but do not run them in this folder, just copy the scripts to a temp folder.
        \end{enumerate}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}[shrink=15]{Explore and Prepare a Protein Structure with Entropy Maxima}
        \begin{enumerate}
-             \item Create a folder called Lecture\_1 in the same folder with EntropyMaxima and $<$ProteinModelingClass$>$. 
-             \item Type the bash commands: 'mkdir Lecture\_1' and 'cd Lecture\_1'
+             \item Create a folder called temp\_lecture\_1 in the same folder with EntropyMaxima and CCL\_Lectures. 
+             \item Type the bash commands: 'mkdir temp\_Lecture\_1' and 'cd temp\_Lecture\_1'
              \item Copy the Lab\_1\_complete\_structure.sh from the CCL\_lectures repository to the folder just created.
              \item Open Lab\_1\_complete\_structure.sh and run each line at the time.
        \end{enumerate}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+\begin{frame}[shrink=15]{Setup Your Environment}
+       \begin{enumerate}
+             \item Install the following programs to work locally from your computer:
+             \begin{enumerate}
+                   \item Install Linux, SSH, or use the bash shell in Macs or new Windows machines(?).
+                   \item Install Python 2.7.12 (We need to test Code in newer python versions.)
+                   \item Install git.
+                   \item Install reduce from http://kinemage.biochem.duke.edu/software/index.php
+                   \item Install CHARMM from https://www.charmm.org/charmm/showcase/news/free-charmm/
+                   \item Install NAMD from http://www.ks.uiuc.edu/Research/namd/
+             \end{enumerate}
+             \item Or, help us set up our servers to log in using SSH and run the tutorials and programs remotely.
+       \end{enumerate}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{}
    \begin{center}
    \textcolor{cyan}{\large Thank you}
