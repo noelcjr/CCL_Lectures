@@ -23,8 +23,8 @@ vmd 1BRS.pdb
 #    We only need one dimer that we need to extract, or separate, from the other
 #    two dimers. The following command separates chains from CIF files by AD,BE,CF
 #    and generates outputs in PDB format.
-/usr/bin/python /PATHTO/EntropyMaxima/src/cif.py --help
-/usr/bin/python /PATHTO/EntropyMaxima/src/cif.py --extract --chains --groups AD,BE,CF --inp2 1BRS.cif
+cif.py --help
+cif.py --extract --chains --groups AD,BE,CF --inp2 1BRS.cif
 vmd 1BRS_0_AD.pdb
 ###########################################################
 
@@ -33,21 +33,21 @@ vmd 1BRS_0_AD.pdb
 #    begining or end of each chain of the proteins are even harder to detect visually.
 #    The following command does a gap analysis that gives the parts of the protein
 #    that are present in the sequence, but for which there is no coordinates in the X-structure.
-/usr/bin/python /PATHTO/EntropyMaxima/src/pdb.py --help
-/usr/bin/python /PATHTO/EntropyMaxima/src/pdb.py --gaps --inp 1BRS_0_AD.pdb
-/usr/bin/python /PATHTO/EntropyMaxima/src/pdb.py --gaps --inp 1BRS_0_BE.pdb
-/usr/bin/python /PATHTO/EntropyMaxima/src/pdb.py --gaps --inp 1BRS_0_CF.pdb
+pdb.py --help
+pdb.py --gaps --inp 1BRS_0_AD.pdb
+pdb.py --gaps --inp 1BRS_0_BE.pdb
+pdb.py --gaps --inp 1BRS_0_CF.pdb
 #########################################################
-
 # completing resideus 1 and 2 missing in chain C from chain B."
-/usr/bin/python /PATHTO/EntropyMaxima/src/pdb.py --align --refA 1BRS_0_BE.pdb --refatomsA CA,B,3,6 --fitA 1BRS_0_CF.pdb --fitatomsA CA,C,3,6 --outA 1BRS_complete_CD_1.pdb --addatomsA B,1,2:C,1,2
+
+pdb.py --align --refA 1BRS_0_BE.pdb --refatomsA CA,B,3,6 --fitA 1BRS_0_CF.pdb --fitatomsA CA,C,3,6 --outA 1BRS_complete_CD_1.pdb --addatomsA B,1,2:C,1,2
 
 # 5. Now, There is another way to complete a structure.
 #    This way is useful for when there is not a coplete structure
 #    to fill in the gaps, and it is meant completely automated.
 #    FOR HELP TYPE: /usr/bin/python /PATHTO/EntropyMaxima/src/gen_csv.py --help
 
-/usr/bin/python /PATHTO/EntropyMaxima/src/gen_csv.py --fromcif --cif 1BRS.cif --out1 1BRS_0.csv --pep ../EntropyMaxima/charmm_templates/peptides.pdb
+gen_csv.py --fromcif --cif 1BRS.cif --out1 1BRS_0.csv --pep ../../EntropyMaxima/charmm_templates/peptides.pdb
 
 # ERROR: After a series of warnings (nothing to worry about), the program crashes. Why? CIF structures were meant
 #        to have a more consisten format than PDB, but errors still happen because my code can not account for all those
@@ -66,13 +66,13 @@ perl -pi -e 's/OXT/O  /g' 1BRS_complete_CF_1.pdb
 #    has to read this labels because it will not recognize the label HIS.
 reduce -HIS -FLIP -OH -ROTEXOH -BUILD -OCC0.0 -H2OOCC0.0 -H2OB1000 1BRS_complete_CF_1.pdb > 1brs_complete_cf_1r.pdb
 vimdiff 1BRS_complete_CF_1.pdb 1brs_complete_cf_1r.pdb
-/usr/bin/python /PATHTO/EntropyMaxima/src/pdb.py --prepare --pdbin1 1brs_complete_cf_1r.pdb --crdou 1brs_complete_cf_1r.crd --seqfix yes
+pdb.py --prepare --pdbin1 1brs_complete_cf_1r.pdb --crdou 1brs_complete_cf_1r.crd --seqfix yes
 
 # 8. Now that we have the right histidine types, we use CHARMM to add missing hydrogen atoms.
 #    8.1 Copy a CHARMM script to your directory setup_one.inp
 #    8.2 Modify the CHARMM script on the fly with the right parameters.
 #    8.3 Run the CHARMM script
-cp /PATHTO/EntropyMaxima/charmm_templates/setup_one.inp .
+cp ../../EntropyMaxima/charmm_templates/setup_one.inp .
 
 perl -pi -e 's/generate C1 first none last none setup/generate C first none last none setup/g' setup_one.inp
 perl -pi -e 's/generate C2 first none last none setup/generate F first none last none setup/g' setup_one.inp
@@ -85,10 +85,10 @@ perl -pi -e 's/OUTFILE/1brs_complete_cf_1rr/g' setup_one.inp
 
 charmm_40b2 < setup_one.inp > setup_one.out
 
-# 9. We can add and remove residues from the files output by CHARMM. First, get the structure in a CSV format with gen_csv.py.
+# 9. We can add and remove residues from the files output by CHARMM. First, get the structure in a CSV format.
 #    Then use add_residues.py and del_residues.py to modify the structure.
-/usr/bin/python /PATHTO/EntropyMaxima/src/gen_csv.py --frompsfcrd --crd 1brs_complete_cf_1rr.crd --psf 1brs_complete_cf_1rr_xplo.psf
-/usr/bin/python ../EntropyMaxima/src/add_residues.py --apn "1,1,C,Ndir" --res "LYS,LYS,LYS,ASP" --inp 1brs_complete_cf_1rr.csv --out 1brs_complete_cf_1rr.csv
-/usr/bin/python ../EntropyMaxima/src/del_residue.py --rem "65,2,F,ASN" --inp 1brs_complete_cf_1rr.csv --out 1brs_complete_cf_1rr.csv
-/usr/bin/python ../EntropyMaxima/src/del_residue.py --rem "64,2,F,GLU" --inp 1brs_complete_cf_1rr.csv --out 1brs_complete_cf_1rr.csv
-/usr/bin/python ../EntropyMaxima/src/del_residue.py --rem "63,2,F,THR" --inp 1brs_complete_cf_1rr.csv --out 1brs_complete_cf_1rr.csv
+gen_csv.py --frompsfcrd --crd 1brs_complete_cf_1rr.crd --psf 1brs_complete_cf_1rr_xplo.psf
+add_residues.py --apn "1,1,C,Ndir" --res "LYS,LYS,LYS,ASP" --inp 1brs_complete_cf_1rr.csv --out 1brs_complete_cf_1rr.csv
+del_residue.py --rem "65,2,F,ASN" --inp 1brs_complete_cf_1rr.csv --out 1brs_complete_cf_1rr.csv
+del_residue.py --rem "64,2,F,GLU" --inp 1brs_complete_cf_1rr.csv --out 1brs_complete_cf_1rr.csv
+del_residue.py --rem "63,2,F,THR" --inp 1brs_complete_cf_1rr.csv --out 1brs_complete_cf_1rr.csv
