@@ -1,0 +1,96 @@
+TITLE: Instructions to download and visualize a structure file while working within a docker image.
+
+NOTE 1: In these tutorials, commands to be run from the operating system (OS) will
+        be preceded by 'OS$', and commands to be run inside the docker container (DC)
+        will be preceded by 'DC#'.
+
+NOTE 2: Notice that for linux/ubunut users, we had to use sudo before every command outside
+        the docker image, but onece inside the docker image you do not need to use sudo anymore.
+        This is because you have root access inside the docker container by default. If you
+        are using Windows or a MAC, you might not need sudo, but you need to have roor access
+        to run docker commands. Please check.
+
+We will download a PDB and CIF file from within a docker image container, and then copy the 
+PDB file outside the docker container to see the structure in your computer with VMD. 
+The docker container runs in a Linux/command-prompt environment and VMD uses a graphical
+user interface, so we need to export the PDB file from within the docker container to our 
+computer's file system to open it.
+
+1. Launch a new container:
+
+   OS$ sudo docker run -it noelcjr/ccl_lectures:1.0 bash
+
+2. Install wget from inside the container. Until the docker image is updated,
+   we will install this program manually every time we launch a NEW image's docker container.
+
+   DC# apt-get install wget
+
+3. We are going to work on tutorials and Code that is constantly imporved and
+   updated, so we need to pull any new information from the two repositories that we use:
+
+   DC# cd home/CCL_Lectures/
+   DC# ls -lt
+
+   The previous command lists the files inside the CCL_Lectures folder.
+
+   DC# git pull
+   DC# ls -lt
+
+   Listing the files after a git pull will show that a few more directories where 
+   downloaded from the lecture's repositorie. We will know do the same for the
+   Entropy Maxima Pytho code that we use.
+ 
+   DC# cd ../Programs/EntropyMaxima/
+   DC# git pull
+
+4. After updating the EntropyMaxime repository in the last step, we now need to
+   install the EntropyMaxima software again. From inside ENtropyMaxima folder type:
+
+   DC# python setup.py install
+
+5. Change directory to the Lecture_1 in CCL_Lectures folder.
+
+   DC# cd ../../CCL_Lectures/Lecture_1/ 
+
+3. Download both 1BRS.pdb and 1BRS.cif. The path to any structure can be found on
+   www.rcsb.org. The files will download to your root directory.
+
+   DC# wget https://files.rcsb.org/view/1BRS.pdb
+   DC# wget https://files.rcsb.org/view/1BRS.cif
+
+4. Exit your container and return to your operating system command prompt.
+
+   DC# exit
+
+5. You can access files in your docker image container even if the container is not
+   running, or you can access this files while the container is runnning and from
+   another terminal or window (Preferred for these tutorials). In either case, to copy
+   a PDB file from within a container to your computer, you need to get the CONTAINER ID 
+   where the file was downloaded. Run the following command from the command line of your 
+   operating system:
+
+   OS$ sudo docker ps -a
+
+   The Container ID is on the left, under 'CONTAINER ID', if there is more than one
+   pick the top one, or most recent one. We will use thi ID in the next step. 
+
+6. Run this in you OS's command prompt to copy the pdb file. Substitute CONTAINERID
+   with the actual container id obtained in the previous step:
+
+   OS$ sudo docker cp CONTAINERID:/home/CCL_Lectures/Lecture_1/1BRS.pdb ./1BRS.pdb
+
+7. You can now open the crystal structure in your computer with VMD. The pdb file inside
+   the 'Presentation' folder in this lecture have some of the most important tools you
+   need when using VMD. There are also many tutorials on line with instructions on
+   how to visualize crystal structures using VMD. I recommend the following
+   tutorial: http://www.ks.uiuc.edu/Training/Tutorials/vmd/vmd-tutorial.pdf
+
+8. Open the PDB file that we just downloaded in VMD, and notice that there are three
+   dimers of the same protein. Which one is the right one? We will pick one in the
+   next tutorial. Also, the three dimers are form by two chains. What are the labels
+   of the chains for each dimer?
+
+CONCLUSION: In this tutorial you downloaded an structure file inside a container and
+            copied the file to your operating system for visualisation. This is
+very important when we using other tools to modify the structure and we want to visually
+confirm the changes.

@@ -1,0 +1,69 @@
+TITLE: Instructions to run a Docker image in your computer's command prompt:
+
+NOTE 1: In these tutorials, commands to be run from the operating system (OS) will
+        be preceded by 'OS$', and commands to be run inside the docker container (DC)
+        will be preceded by 'DC#'.
+
+NOTE 2: Notice that for linux/ubunut users, we had to use sudo before every command outside
+        the docker image, but onece inside the docker image you do not need to use sudo anymore.
+        This is because you have root access inside the docker container by default. If you
+        are using Windows or a MAC, you might not need sudo, but you need to have roor access
+        to run docker commands. Please check.
+
+1. Download Docker from https://www.docker.com/
+   and look for installation instructions for your operating system.
+   There is plenty of online documentation, and it is a simple process.
+
+2. After the program is installed you are going to pull the docker 
+   image from a repository. The image is a copy of my Linux environment
+   with all the programs you need to model proteins. Installing all of
+   the programs is a long and difficult process and docker save us that
+   trouble. the following command will download the image:
+
+   OS$ sudo docker pull noelcjr/ccl_lectures:1.0
+
+   NOTE: The sudo command is needed in Linux to have root authorization to
+   run docker, and it prompt your for a password. Sudo might not work, or is
+   not needed in macs or windows. Keep this in mind for every docker command.
+
+3. When the imaged is downloaded, type the following command:
+
+   OS$ sudo docker images		    
+
+   you will see the image you just downloaded. That image is not running yet.
+
+4. run an image inside a container like this:
+		        
+   OS$ sudo docker run -it noelcjr/ccl_lectures:1.0 bash
+			       
+   The above command will load the image and change the command prompt. You
+   are now in a Linux/bash environment that is pre-configured with the programs 
+   I use for the open insulin project. You might make, change or delete files, 
+   but they will only remain available as long as the container is not deleted. 
+
+5. An image container actually runs another operating system inside your operating
+   system. Type 'exit' from within the container to return to your operating system's
+   command line. 
+
+   DC# exit
+
+6. To check that a container is still present type:
+			     
+   OS$ sudo docker ps -a
+
+   Copy the alphanumeric value on the left, under CONTAINER ID. You need this to
+   get back into your image.
+
+7. Access a container again without losing data inside it. 
+   Your container could be active or not. If it is not active and you want to launch it
+   do not use the command in step 4 above. That will restart an image and you 
+   will not see changes you made inside that container. Use the following two 
+   commands to get back into an image from your operating system command prompt:
+			            
+   OS$ sudo docker start <CONTAINER ID>
+   OS$ sudo docker attach <CONTAINER ID>
+
+CONCLUSION: This simple process is how you download and image, launch a container
+             with that image, exit the image, and access it again without losing the
+data inside the container. This process is what we will use to run the tutorials for
+each lecture.

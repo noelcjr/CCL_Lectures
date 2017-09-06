@@ -1,0 +1,141 @@
+TITLE: Completing the heterotrimeric G-protein, an insight into why some structural information
+       is missing, and how some biologically relevant features must be kept.
+
+NOTE 1: In these tutorials, commands to be run from the operating system (OS) will
+        be preceded by 'OS$', and commands to be run inside the docker container (DC)
+        will be preceded by 'DC#'.
+
+NOTE 2: Notice that for linux/ubunut users, we had to use sudo before every command outside
+        the docker image, but onece inside the docker image you do not need to use sudo anymore.
+	This is because you have root access inside the docker container by default. If you
+	are using Windows or a MAC, you might not need sudo, but you need to have roor access
+	to run docker commands. Please check.
+
+So far you have completed a structure with missing information from another identical structure
+from with the same crystal structure. Why is there missing reagions in some parts of a protein
+and not others. The reason is that even a the low temperatures that proteins are crystalize there
+is thermal motion that prevents some part of proteins to be 'photograph' with x-rays. It is 
+something like taking a picture of a car moving fast, and just geting a blurred images with
+low resolution. Likewise, some parts of the protein move faster than others.
+
+In this tutorial, you will complete a region of 1GDD.pdb from 1GIA.pdb. The two structures
+are identical in amino acid sequence, but 1GDD.pdb has a hydrolized Guanosine diphosphate (GDP)
+molecule with only two phosaphate groups, and 1GIA.pdb has a un-hydrolized Guanosine triphosphate (GTP). 
+These two different molecules bound to a similar protein appear to be the most important reason
+why there is a section in 1GDD.pdb that is missing. 
+
+Completing a second structure gives us a glipse of the lack of consistency in naming protein
+chains and molecules bound to the protein. This is important to realize because you have 
+to be familiar with the organization of chains in this molecules and theur biological relevance
+to model the prtein the proper way. You need to read about the function of the protein
+to know what to complete, keep or rename without losing relevant structural information.
+
+We will also learn a different way to complete missing amino acids when we do not have
+another protein structure to copy and paste the missing structural information.
+
+1. Log on to the same image container that you worked on in the last lecture.
+
+   OS$ sudo docker start <CONTAINER ID>
+   OS$ sudo docker attach <CONTAINER ID>
+   
+2. Even if you recently worked in the container from lecture 1, always
+   go to the EntropyMaxima and ccl_lectures repository and update them by pulling
+   the latest changes.
+
+   DC# cd home/CCL_Lectures/
+   DC# git pull
+   DC# cd ../Programs/EntropyMaxima/
+   DC# git pull
+   
+3. if you are working on the same container as in Lecture 1, you should still
+   have the wget progrem and the following command should run:
+
+   DC# wget https://files.rcsb.org/view/1GDD.pdb
+   DC# wget https://files.rcsb.org/view/1GDD.cif
+
+   DC# wget https://files.rcsb.org/view/1GIA.pdb
+   DC# wget https://files.rcsb.org/view/1GIA.cif
+
+   if the commands do not work, you are in a different container and install wget again.
+   See instructions in Lecture 1 to isntall wget.
+
+4. Check for gaps test pased for both 1GDD and 1GIA.
+   
+   DC# pdb_cif.py gaps --input 1GDD.pdb
+   DC# pdb_cif.py gaps --input 1GIA.pdb
+
+   This shows that amino acid numbers 202 to 217 are missing in 1GDD and present in 1GIA.
+
+5. First, we will just align 1GDD.pdb to 1GIA.pdb using atoms presentand near the missing
+   region, but we will not cut and paste the missing atoms from one structure to another.
+   Alignments are almost always done on alpha carbons (CA) in the back bone of the crystal
+   structure. Side chains have more mobility thatn back bones in proteins, and using
+   other atoms can produce bad alignments. 
+
+   DC# pdb_cif.py --align --inputfile 1GIA.pdb --refatoms CA,A,198,201:CA,A,218,221 --fit 1GDD.pdb --fitatoms CA,A,198,201:CA,A,218,221 --out 1GDD_to_1GIA_just_fit.pdb
+
+   This is to show you an added feature of the aling command in pdb_cif.py. The alignment
+   is done, and a Root mean square deviation (RMSD) of the atoms used for alignment is given.
+   This measure of closeness in alignment is important to analyse simulations later.
+
+6. We now do the same alignment, but this time we add the missing region. When adding regions,
+   every atom from the amino acid is added to the structure with the gap. This could potentially
+   cause unwanted clashes between amino acids. We will deal with those later, for now it is just
+   important to make you aware that added regions in one protein might no be able to fit well in
+   the pocket of the structure with missing amino acids.  
+
+   DC# pdb_cif.py align --input 1GIA.pdb --refatoms CA,A,198,201:CA,A,218,221 --fit 1GDD.pdb --fitatoms CA,A,198,201:CA,A,218,221 --out 1GDD_to_1GIA_fit_and_add.pdb --addatoms A,202,217:A,202,217
+
+7. In Lecture 1 we learned how to copy files from within the container to your operating
+   system. Do the same for 1GDD.pdb, 1GIA.pdb, and the outputs from the alignments,
+   1GDD_to_1GIA_just_fit.pdb and 1GDD_to_1GIA_fit_and_add.pdb. Open them in VMD and play
+   with the rendering to go over the sections we added. Note: because of misalignments
+   in placing one region of one protein on another, the added region will not show up
+   if you use ribons to display the backbone, but the atoms are there. This is to remind
+   you that the alignments are rigid and do not always fit perfectly, and VMD picks this
+   slight jump in atoms structures, and chooses not to draw ribons. But the alignments 
+   worked, and the added atoms will show up if rendere as lines or bonds. 
+
+8. Something to think about it. If you open 1GIA.pdb and 1GDD.pdb with your favorite
+   text editor and go to where the GDP and GTP are in the file, you will notice that
+   while these two molecules are bound to the protein chain, they have the same chain 
+   identifier. 1GIA even has a Magnesium ion that is there to prevent the protein to
+   hydrolize GTP, and allow its crystalization. This could lead to problems down the road.
+   For now, just keep in mind that while the formating of PDBs where improved in the
+   CIF files, certain inconsistencies still are present because of desitions made by
+   crystalographers. This only highlights the important of fully understanding the biological
+   relevance of the protein we are modeling and what we want to keep, separate, align
+   or complete.  
+
+9. Now, There is another way to complete a structure when there is no 'twin' structure
+   from which we can get missing amino acids. The following scripts will detect
+   gaps, including those in the C-terminal, and will add amino acids in a straight line.
+   In this case the missing parts extend out into the solvent, and not towards the
+   interior of the protein. This could be a problem for modeling other proteins with this
+   method. This method takes only CIF files, not PDBs, but it outputs the structure
+   in a comma separated file as well as PDB files.
+
+gen_csv.py --fromcif --cif 1GDD.cif --out1 1BRS_0.csv --pep ../../EntropyMaxima/charmm_templates/peptides.pdb --top ../../EntropyMaxima/params/charmm27.ff/
+
+10. Download and open the output from the previous step in VMD. 
+
+CONLCUSION: In this structure we saw that two identical proteins have a region that is
+            missing when the protein is bound to GDP, and present when bound to GTP.
+This crystallographic evidence of the hydrolization process of GTPase proteins. The
+missing region suggests that there is a role by the dynamics of the protein in biological
+function. This is at the heart of why we want to model proteins. In future lectures
+we will learn to do molecular dynamics simulations and understand energies. Simulations
+are models that enhance what is observed in crystal structures, and they could be used,
+for example, in understanding the roles of the amino acids involvef in the hydrolyzation
+of GTP so that we can do computational alanine scanning mutagenesis, and measure what
+amino acids are more important to this function.
+
+We also learn that we cannot trust crystal structures in their naming comventions of 
+chains, or even their numbering. This should easily be solved by a careful modeller of
+proteins, but it requires a lot of reading to be sure that what we model is sound.
+
+We are done with completing missing regions for now. In the next lecture, we will
+add new regions to extend the protein, and use those added regions to fuse two different
+proteins.
+
+ 

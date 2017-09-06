@@ -79,7 +79,7 @@ WHO alcohol consumption data:
 
 Pandas Basics: Reading Files, Summarizing, Handling Missing Values, Filtering, Sorting
 '''
-drinks = pd.read_csv('/home/noel/Code/Python/data/drinks.csv')
+drinks = pd.read_csv('drinks.csv')
 type(drinks)            # Use the type method to check python type
 # examine the data
 drinks                  # print the first 30 and last 30 rows
@@ -99,7 +99,7 @@ drinks.dropna()             # drop a row if ANY values are missing
 drinks.fillna(value='NA')   # fill in missing values
 
 # fix the original import with filter
-drinks = pd.read_csv('/home/noel/Code/Python/data/drinks.csv', na_filter=False)
+drinks = pd.read_csv('drinks.csv', na_filter=False)
 drinks.isnull().sum()
 
 # selecting a column ('Series')
@@ -233,7 +233,7 @@ drinks.plot(x='beer_servings', y='wine_servings', kind='scatter', c=colors)
 #### LAB #####
 ##############
 # read in the CSV file from a URL
-drinks = pd.read_csv('/home/noel/Code/Python/data/drinks.csv', na_filter=False)
+drinks = pd.read_csv('drinks.csv', na_filter=False)
 # 1. Show the first 17 rows of drinks
 drinks.head(17)
 # 2. create a variable called beer_servings and use it to store the beer_servings column
@@ -292,7 +292,7 @@ movie_ratings.groupby('title').rating.mean().order(ascending=False)
 Dealing with nulll values
 Scraped from: http://www.nuforc.org/webreports.html
 '''
-ufo = pd.read_csv('/home/noel/Code/Python/data/ufo.csv')   
+ufo = pd.read_csv('ufo.csv')   
 ufo.head()              # Look at the top 5 observations
 ufo.tail()              # Look at the bottom 5 observations
 ufo.describe()          # describe any numeric columns (unless all columns are non-numeric)
@@ -323,7 +323,7 @@ ufo.fillna(value = 'Unknown', inplace = True)   # Permanent
 
 ############# 04 More Pandas  ########################
 ############# Load UFOs again ########################
-ufo = pd.read_csv('/home/noel/Code/Python/data/ufo.csv')   # can also read csvs directly from the web!
+ufo = pd.read_csv('ufo.csv')   # can also read csvs directly from the web!
 
 ufo                 
 ufo.head(5)          # Look at the top x observations
@@ -509,7 +509,7 @@ sightings_per_year.plot(kind='line',
 # Well hold on Sinan, the US population is always increasing
 # So maybe there's a jump in population which would make sense!
 # US Population data from 1930 as taken from the Census
-us_population = pd.read_csv('../data/us_population.csv')
+us_population = pd.read_csv('us_population.csv')
 us_population.plot(x = 'Date', y = 'Population', legend = False)
 
 # Seems like a steady increase to me..
@@ -537,7 +537,7 @@ Writing Data
 ufo.to_csv('ufo_new.csv')               # First column is an index
 ufo.to_csv('ufo_new.csv', index=False)  # First column is no longer index
 #### LAB ###################
-ufo = pd.read_csv('/home/noel/Code/Python/data/ufo.csv')
+ufo = pd.read_csv('ufo.csv')
 ufo.rename(columns=lambda x: x.lower().replace(' ',''), inplace=True)
 
 # 2. Show a bar chart of all shapes reported
@@ -596,7 +596,7 @@ https://archive.ics.uci.edu/ml/datasets/Iris
 
 '''
 # load the famous iris data
-iris = pd.read_csv('/home/noel/Code/Python/data/iris.csv')   # can also read csvs directly from the web!
+iris = pd.read_csv('iris.csv')   # can also read csvs directly from the web!
 # Read data into pandas and explore
 
 # explore data numerically, looking for differences between species
