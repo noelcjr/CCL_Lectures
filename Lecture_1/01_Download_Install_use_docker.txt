@@ -5,7 +5,7 @@ NOTE 1: In these tutorials, commands to be run from the operating system (OS) wi
         will be preceded by 'DC#'.
 
 NOTE 2: Notice that for linux/ubunut users, we had to use sudo before every command outside
-        the docker image, but onece inside the docker image you do not need to use sudo anymore.
+        the docker image, but once inside the docker image you do not need to use sudo anymore.
         This is because you have root access inside the docker container by default. If you
         are using Windows or a MAC, you might not need sudo, but you need to have roor access
         to run docker commands. Please check.
@@ -23,7 +23,7 @@ NOTE 2: Notice that for linux/ubunut users, we had to use sudo before every comm
    OS$ sudo docker pull noelcjr/ccl_lectures:1.0
 
    NOTE: The sudo command is needed in Linux to have root authorization to
-   run docker, and it prompt your for a password. Sudo might not work, or is
+   run docker, and it prompts you for a password. Sudo might not work, or is
    not needed in macs or windows. Keep this in mind for every docker command.
 
 3. When the imaged is downloaded, type the following command:
@@ -56,7 +56,7 @@ NOTE 2: Notice that for linux/ubunut users, we had to use sudo before every comm
 
 7. Access a container again without losing data inside it. 
    Your container could be active or not. If it is not active and you want to launch it
-   do not use the command in step 4 above. That will restart an image and you 
+   DO NOT use the command in step 4 above. That will restart an image and you 
    will not see changes you made inside that container. Use the following two 
    commands to get back into an image from your operating system command prompt:
 			            

@@ -5,7 +5,7 @@ NOTE 1: In these tutorials, commands to be run from the operating system (OS) wi
         will be preceded by 'DC# #'.
 
 NOTE 2: Notice that for linux/ubunut users, we had to use sudo before every command outside
-        the docker image, but onece inside the docker image you do not need to use sudo anymore.
+        the docker image, but once inside the docker image you do not need to use sudo anymore.
         This is because you have root access inside the docker container by default. If you
         are using Windows or a MAC, you might not need sudo, but you need to have roor access
         to run docker commands. Please check.
@@ -13,6 +13,10 @@ NOTE 2: Notice that for linux/ubunut users, we had to use sudo before every comm
    We downloaded 1BRS.pdb and 1BRS.cif in the previous tutorial.
    1BRS has 6 chains, A,B,C,D,E and F. AD, BE and CF form dimers.
    It is a crystal structure with three dimers, and we only need one.
+   How do I know that the crystal structure has three dimers of the same
+   protein instead of one complex formed by three pairs of proteins? The
+   simplest way to find out is by reading the crystalographic paper that
+   is in bith the PDB and CIF headers with meta data information.
    
    Chains belonging to the same dimers are not contiguous to each other
    in alphatical order by identifiers in this crystal structure, but it is
@@ -45,7 +49,7 @@ NOTE 2: Notice that for linux/ubunut users, we had to use sudo before every comm
 
    DC# pdb_cif.py extract --input 1BRS.cif --chains --groups AD,BE,CF
 
-   As always, confirm that what you did this right by copying the generated PDF 
+   As always, confirm that what you did this right by copying the generated PDB 
    files from within the container to your computers operating system and open it 
    with VMD, and after that return to the container. We have three new PDB files 
    with different chains, and we now need to pick one for more analysis.
@@ -61,10 +65,10 @@ NOTE 2: Notice that for linux/ubunut users, we had to use sudo before every comm
    DC# pdb_cif.py gaps --input 1BRS_0_BE.pdb
    DC# pdb_cif.py gaps --input 1BRS_0_CF.pdb
 
-   The output gove a Model number and a Chain identifier. SOme PDBs have more than
+   The output gave a Model number and a Chain identifier. SOme PDBs have more than
    one structure of the same protein, and they are usally number starting at 0.
  
-   The three numbers inside  the parenthesis correpond to the gap number and the
+   The three numbers inside the parenthesis correpond to the gap number and the
    amino acid number ranges. For example: (1,2,6) is read as gap 1 that corresponds
    to missing amino acids 2,3,4,5,6. When there are no gaps, the output is (0,0,0).
 
@@ -79,6 +83,6 @@ NOTE 2: Notice that for linux/ubunut users, we had to use sudo before every comm
    the other after aligning the structures.
 
 CONCLUSION: It is important to know what is inside a PDB or CIF structure file to
-            know if there are mutiple structures of the same protein. We then can
+            know if there are mutiple repeated structures of the same protein. We then can
 extract only one dimer from the original crystal structure and use the other dimers
 `to fill gaps in the selected dimer. 

@@ -21,7 +21,7 @@ low resolution. Likewise, some parts of the protein move faster than others.
 In this tutorial, you will complete a region of 1GDD.pdb from 1GIA.pdb. The two structures
 are identical in amino acid sequence, but 1GDD.pdb has a hydrolyzed Guanosine diphosphate (GDP)
 molecule with only two phosphate groups, and 1GIA.pdb has a un-hydrolyzed Guanosine triphosphate (GTP). 
-These two different molecules bound to a similar protein appear to be the most important reason
+These two different molecules bound to the same protein appear to be the most important reason
 why there is a section in 1GDD.pdb that is missing. 
 
 Completing a second structure gives us a glimpse of the lack of consistency in naming protein
@@ -44,6 +44,7 @@ another protein structure to copy and paste the missing structural information.
 
    DC# cd /home/Programs/EntropyMaxima/
    DC# git pull
+   DC# python setup.py install
    DC# cd ../../CCL_Lectures/
    DC# git pull
    DC# cd Lecture_3/
@@ -97,7 +98,7 @@ another protein structure to copy and paste the missing structural information.
    slight jump in atoms structures, and chooses not to draw ribbons. But the alignments 
    worked, and the added atoms will show up if rendered as lines or bonds. 
 
-8. Something to think about it. If you open 1GIA.pdb and 1GDD.pdb with your favorite
+8. Something to think about. If you open 1GIA.pdb and 1GDD.pdb with your favorite
    text editor and go to where the GDP and GTP are in the file, you will notice that
    while these two molecules are bound to the protein chain, they have the same chain 
    identifier. 1GIA even has a Magnesium ion that is there to prevent the protein to

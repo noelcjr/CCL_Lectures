@@ -5,7 +5,7 @@ NOTE 1: In these tutorials, commands to be run from the operating system (OS) wi
         will be preceded by 'DC#'.
 
 NOTE 2: Notice that for linux/ubunut users, we had to use sudo before every command outside
-        the docker image, but onece inside the docker image you do not need to use sudo anymore.
+        the docker image, but once inside the docker image you do not need to use sudo anymore.
         This is because you have root access inside the docker container by default. If you
         are using Windows or a MAC, you might not need sudo, but you need to have roor access
         to run docker commands. Please check.
@@ -37,8 +37,8 @@ computer's file system to open it.
    DC# ls -lt
 
    Listing the files after a git pull will show that a few more directories where 
-   downloaded from the lecture's repositorie. We will know do the same for the
-   Entropy Maxima Pytho code that we use.
+   downloaded from the lecture's repositorie. We will now do the same for the
+   Entropy Maxima Python code that we use.
  
    DC# cd ../Programs/EntropyMaxima/
    DC# git pull
@@ -53,7 +53,7 @@ computer's file system to open it.
    DC# cd ../../CCL_Lectures/Lecture_1/ 
 
 3. Download both 1BRS.pdb and 1BRS.cif. The path to any structure can be found on
-   www.rcsb.org. The files will download to your root directory.
+   www.rcsb.org. The files will download to your Lecture_1 directory.
 
    DC# wget https://files.rcsb.org/view/1BRS.pdb
    DC# wget https://files.rcsb.org/view/1BRS.cif
@@ -71,15 +71,15 @@ computer's file system to open it.
 
    OS$ sudo docker ps -a
 
-   The Container ID is on the left, under 'CONTAINER ID', if there is more than one
-   pick the top one, or most recent one. We will use thi ID in the next step. 
+   The Container ID is on the left, under 'CONTAINER ID', if there are more than one,
+   pick the top one, or most recent one. We will use this ID in the next step. 
 
 6. Run this in you OS's command prompt to copy the pdb file. Substitute CONTAINERID
    with the actual container id obtained in the previous step:
 
    OS$ sudo docker cp CONTAINERID:/home/CCL_Lectures/Lecture_1/1BRS.pdb ./1BRS.pdb
 
-7. You can now open the crystal structure in your computer with VMD. The pdb file inside
+7. You can now open the crystal structure in your computer with VMD. The pdf file inside
    the 'Presentation' folder in this lecture have some of the most important tools you
    need when using VMD. There are also many tutorials on line with instructions on
    how to visualize crystal structures using VMD. I recommend the following
@@ -87,7 +87,7 @@ computer's file system to open it.
 
 8. Open the PDB file that we just downloaded in VMD, and notice that there are three
    dimers of the same protein. Which one is the right one? We will pick one in the
-   next tutorial. Also, the three dimers are form by two chains. What are the labels
+   next tutorial. Also, the three dimers are formed by two chains. What are the labels
    of the chains for each dimer?
 
 CONCLUSION: In this tutorial you downloaded an structure file inside a container and
